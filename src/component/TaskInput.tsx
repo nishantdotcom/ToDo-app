@@ -18,20 +18,32 @@ function TaskInput() {
   }
   function handleRadioEvent(event: React.MouseEvent<HTMLInputElement>) {
     console.log(event);
+    const finalId: number = parseInt((event.target as HTMLInputElement).value);
+    console.log(finalId);
+
+    const newData: TodoType[] = list.filter((data) => {
+      return data.id != finalId;
+    });
+    console.log(newData);
+    setlist(newData);
   }
 
   function handleSubmit() {
-    setTask("");
-    setTaskDescription("");
-    const getTask: TodoType[] = list;
-    const task_id: number = list.length;
-    getTask.push({
-      title: task,
-      desc: taskDesc,
-      id: task_id,
-    });
-    console.log(getTask);
-    setlist(getTask);
+    if (task != "" || taskDesc != "") {
+      setTask("");
+      setTaskDescription("");
+      const getTask: TodoType[] = list;
+      const task_id: number = list.length;
+      getTask.push({
+        title: task,
+        desc: taskDesc,
+        id: task_id,
+      });
+      console.log(getTask);
+      setlist(getTask);
+    } else {
+      alert("Please enter text");
+    }
   }
 
   return (
@@ -85,6 +97,7 @@ function TaskInput() {
                   onClick={(event) => {
                     handleRadioEvent(event);
                   }}
+                  value={data.id}
                 />
               </div>
               <div>{data.title}</div>
